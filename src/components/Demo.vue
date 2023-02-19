@@ -1,69 +1,48 @@
 <template>
-	<h2>当前求和为：{{ sum }}</h2>
-	<button @click="sum++">点我+1</button>
+	<h4>{{person}}</h4>
+	<h2>姓名：{{name}}</h2>
+	<h2>年龄：{{age}}</h2>
+	<h2>薪资：{{job.j1.salary}}K</h2>
+	<button @click="name+='~'">修改姓名</button>
+	<button @click="age++">增长年龄</button>
+	<button @click="job.j1.salary++">涨薪</button>
 </template>
 
 <script>
-    /*eslint-disable*/
-	import {onBeforeMount, onBeforeUnmount, onBeforeUpdate, onMounted, onUnmounted, onUpdated, ref,} from 'vue'
+/*eslint-disable*/
+	import {ref,reactive,toRef,toRefs} from 'vue'
 	export default {
 		name: 'Demo',
 		setup(){
 			//数据
-			let sum = ref(0)
-			
-			//通过组合式API的形式去使用生命周期钩子
-			onBeforeMount(()=>{
-				console.log('---onBeforeMount---');
+			let person = reactive({
+				name:'张三',
+				age:18,
+				job:{
+					j1:{
+						salary:20
+					}
+				}
 			})
-			onMounted(()=>{
-				console.log('---onMounted---');
-			})
-			onBeforeUpdate(()=>{
-				console.log('---onBeforeUpdate---');
-			})
-			onUpdated(()=>{
-				console.log('---onUpdated---');
-			})
-			onBeforeUnmount(()=>{
-				console.log('---onBeforeUnmount---');
-			})
-			onUnmounted(()=>{
-				console.log('---onUnmounted---');
-			})
+
+			// const name1 = person.name
+			// console.log('%%%',name1)
+
+			// const name2 = toRef(person,'name')
+			// console.log('####',name2)
+
+			const x = toRefs(person)
+			console.log('******',x)
 
 			//返回一个对象（常用）
 			return {
-				sum,
+				person,
+				// name:toRef(person,'name'),
+				// age:toRef(person,'age'),
+				// salary:toRef(person.job.j1,'salary'),
+				...toRefs(person)
 			}
-		},
-		//通过配置项的形式使用生命周期钩子
-		//#region
-		/* beforeCreate(){
-			console.log('---beforeCreate---');
-		},
-		created(){
-			console.log('---created---');
-		},
-		beforeMount(){
-			console.log('---beforeMount---');
-		},
-		mounted(){
-			console.log('---mounted---');
-		},
-		beforeUpdate(){
-			console.log('---beforeUpdate---');
-		},
-		updated(){
-			console.log('---updated---');
-		},
-		beforeUnmount(){
-			console.log('---beforeUnmount---');
-		},
-		unmounted(){
-			console.log('---unmounted---');
-		}, */
-		//#endregion
+		}
 	}
 </script>
 
