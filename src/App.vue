@@ -8,10 +8,9 @@
 <script>
 /*eslint-disable*/
 	import Child from './components/Child'
-	import Son from './components/Son.vue';
 	export default {
 		name:'App',
-		components:{Child,Son},
+		components:{Child},
 		
 	}
 </script>
